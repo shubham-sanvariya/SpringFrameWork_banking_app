@@ -1,5 +1,8 @@
 package com.springframework.banking_app.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.springframework.banking_app.entity.Account;
@@ -50,6 +53,11 @@ public class AccountServiceImpl implements AccountService{
             Account updatedAccount = accountRepository.save(account);
             return AccountMapper.mapToAccountDto(updatedAccount);
         }
+    }
+
+    public List<AccountDto> getAllAccountDtos() {
+        return accountRepository.findAll().stream()
+        .map((account) -> AccountMapper.mapToAccountDto(account)).toList();
     }
     
     
