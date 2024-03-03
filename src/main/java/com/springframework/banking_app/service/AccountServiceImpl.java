@@ -1,7 +1,5 @@
 package com.springframework.banking_app.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import com.springframework.banking_app.entity.Account;
@@ -40,5 +38,19 @@ public class AccountServiceImpl implements AccountService{
         Account updatedAccount = accountRepository.save(account);
         return AccountMapper.mapToAccountDto(updatedAccount);
     }
+
+    public AccountDto withdraw(Long id, double amount) {
+        Account account = accountRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Account not found"));
+        if (account.getBalance() < amount) {
+            throw new RuntimeException("insufficient balance");
+        }else{
+            double updatedAmount = account.getBalance() - amount;
+            account.setBalance(updatedAmount);
+            Account updatedAccount = accountRepository.save(account);
+            return AccountMapper.mapToAccountDto(updatedAccount);
+        }
+    }
+    
     
 }
