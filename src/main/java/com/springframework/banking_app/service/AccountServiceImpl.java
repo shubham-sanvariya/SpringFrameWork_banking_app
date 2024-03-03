@@ -1,6 +1,5 @@
 package com.springframework.banking_app.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -58,6 +57,13 @@ public class AccountServiceImpl implements AccountService{
     public List<AccountDto> getAllAccountDtos() {
         return accountRepository.findAll().stream()
         .map((account) -> AccountMapper.mapToAccountDto(account)).toList();
+    }
+
+    public void deleteAccount(Long id) {
+        Account account = accountRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Account does not exists"));
+
+        accountRepository.delete(account);
     }
     
     
