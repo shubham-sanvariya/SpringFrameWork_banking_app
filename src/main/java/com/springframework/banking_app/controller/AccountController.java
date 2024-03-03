@@ -1,5 +1,6 @@
 package com.springframework.banking_app.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,11 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<AccountDto> addAccount(@RequestBody AccountDto accountDto){
         return new ResponseEntity<>(accountService.createAccount(accountDto),HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AccountDto>> getAllAccounts(){
+        return new ResponseEntity<>(accountService.getAllAccountDtos(),HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/{id}")
